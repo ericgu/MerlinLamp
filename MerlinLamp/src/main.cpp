@@ -25,6 +25,7 @@
 LedDeviceCreator *_pLedDeviceCreator;
 ILedDevice *_pLedDevice;
 LedManager *_pLedManager;
+ButtonCreator *_pButtonCreator;
 
 Supervisor *_pSupervisor;
 Settings *_pSettings;
@@ -92,10 +93,8 @@ void setup()
 
   _pSettings->Init();
   _pLedManager = new LedManager(_pLedDeviceCreator);
-  _pSupervisor->Init(_pLedManager, _pSettings, Callback);
-
-  _pButton = new TouchButton(32, 20);
-  _pSupervisor->AddButton(_pButton);
+  _pButtonCreator = new ButtonCreator();
+  _pSupervisor->Init(_pLedManager, _pSettings, Callback, _pButtonCreator);
 
   xTaskCreatePinnedToCore(
       RunDim, /* Task function. */
